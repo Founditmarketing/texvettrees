@@ -1,0 +1,8 @@
+{
+  "name": "Tex Vet Trees",
+  "description": "Veteran owned and operated tree service and landscaping in Texas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
