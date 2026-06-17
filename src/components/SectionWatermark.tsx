@@ -3,10 +3,19 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 
 /**
  * A huge, faint section title sitting behind the content that drifts horizontally as the section
- * scrolls through the viewport. Self-clips (own overflow-hidden) so the host section does NOT need
- * `overflow-hidden` — which would otherwise break `position: sticky` descendants.
+ * scrolls through the viewport. `align="top"` anchors it near the top of the section (more visible
+ * behind the heading); default is vertically centered. Self-clips (own overflow-hidden) so the host
+ * section does NOT need `overflow-hidden` — which would otherwise break `position: sticky` descendants.
  */
-export function SectionWatermark({ text, className = '' }: { text: string; className?: string }) {
+export function SectionWatermark({
+  text,
+  align = 'center',
+  className = '',
+}: {
+  text: string;
+  align?: 'center' | 'top';
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
@@ -16,7 +25,9 @@ export function SectionWatermark({ text, className = '' }: { text: string; class
     <div
       ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 z-0 flex items-center overflow-hidden ${className}`}
+      className={`pointer-events-none absolute inset-0 z-0 flex overflow-hidden ${
+        align === 'top' ? 'items-start pt-10 sm:pt-14' : 'items-center'
+      } ${className}`}
     >
       <motion.span
         style={reduce ? undefined : { x }}

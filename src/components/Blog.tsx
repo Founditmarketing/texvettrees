@@ -25,7 +25,7 @@ const POSTS = [
 export function Blog() {
   return (
     <section id="blog" className="relative py-24 bg-[#0a0a0a] border-t border-white/5">
-      <SectionWatermark text="Dispatches" />
+      <SectionWatermark text="Dispatches" align="top" />
       <div className="container mx-auto px-6 relative z-10">
         
         <div className="text-center mb-16">

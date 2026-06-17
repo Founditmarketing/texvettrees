@@ -1,6 +1,5 @@
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin } from 'lucide-react';
-import { SectionWatermark } from './SectionWatermark';
 
 /** Single source of truth for the embedded HubSpot CRM form (also used by the floating button). */
 export const HUBSPOT_FORM_URL = 'https://share-na2.hsforms.com/1KRGM0q_oRFqbBENVRwzGMg41nkuy';
@@ -14,7 +13,6 @@ const CONTACTS = [
 export function ContactForm() {
   return (
     <section id="contact" className="relative py-24 bg-[#111] border-t border-white/5">
-      <SectionWatermark text="Contact" />
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left: copy + contact details (consolidated from the old "Take Action" block) */}

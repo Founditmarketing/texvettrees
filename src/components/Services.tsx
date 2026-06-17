@@ -260,7 +260,7 @@ export function Services() {
 
   return (
     <section id="services" className="relative py-24 bg-[#0a0a0a] border-t border-white/5">
-      <SectionWatermark text="Services" />
+      <SectionWatermark text="Services" align="top" />
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-12">
@@ -295,36 +295,36 @@ export function Services() {
             Drag any photo to see the transformation — before and after, on real Texas job sites.
           </motion.p>
         </div>
+      </div>
 
-        {/* Carousel */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => scrollByCard(-1)}
-            aria-label="Previous services"
-            className="hidden sm:grid absolute left-0 lg:-left-4 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full border border-white/15 bg-[#111] text-white shadow-lg transition-colors hover:bg-[#4c5230] hover:border-[#4c5230]"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollByCard(1)}
-            aria-label="Next services"
-            className="hidden sm:grid absolute right-0 lg:-right-4 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full border border-white/15 bg-[#111] text-white shadow-lg transition-colors hover:bg-[#4c5230] hover:border-[#4c5230]"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+      {/* Carousel — full width, bleeds to the right edge */}
+      <div className="relative z-10">
+        <button
+          type="button"
+          onClick={() => scrollByCard(-1)}
+          aria-label="Previous services"
+          className="hidden sm:grid absolute left-2 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full border border-white/15 bg-[#111] text-white shadow-lg transition-colors hover:bg-[#4c5230] hover:border-[#4c5230]"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollByCard(1)}
+          aria-label="Next services"
+          className="hidden sm:grid absolute right-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 place-items-center rounded-full border border-white/15 bg-[#111] text-white shadow-lg transition-colors hover:bg-[#4c5230] hover:border-[#4c5230]"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
 
-          <div
-            ref={trackRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4 px-1 -mx-1"
-          >
-            {SERVICES.map((service, index) => (
-              <div key={service.title} className="snap-start shrink-0 w-[85%] sm:w-[55%] md:w-[44%] lg:w-[31.5%]">
-                <ServiceCard service={service} index={index} />
-              </div>
-            ))}
-          </div>
+        <div
+          ref={trackRef}
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-6 pl-6 sm:pl-8 lg:pl-12 pr-0 scroll-pl-6 sm:scroll-pl-8 lg:scroll-pl-12"
+        >
+          {SERVICES.map((service, index) => (
+            <div key={service.title} className="snap-start shrink-0 w-[85%] sm:w-[55%] md:w-[44%] lg:w-[31.5%]">
+              <ServiceCard service={service} index={index} />
+            </div>
+          ))}
         </div>
       </div>
     </section>
