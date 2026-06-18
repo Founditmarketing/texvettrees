@@ -1,19 +1,23 @@
+import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { SocialLinks } from './SocialLinks';
+import { SERVICES } from '../data/services';
 
 export function Footer() {
   return (
-    <footer className="bg-black border-t border-white/5 text-white pt-20 pb-8">
+    <footer className="bg-black border-t border-white/5 text-white pt-20 pb-24 sm:pb-8">
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           {/* Column 1 */}
           <div>
-             <img
-              src="/images/Tex-Vet-Trees-Logo-Transparent-BG-200x120-1.png"
-              alt="Tex Vet Trees & Landscaping"
-              className="h-14 w-auto mb-6"
-             />
+             <Link to="/" className="inline-block mb-6">
+               <img
+                src="/images/Tex-Vet-Trees-Logo-Transparent-BG-200x120-1.png"
+                alt="Tex Vet Trees & Landscaping"
+                className="h-14 w-auto"
+               />
+             </Link>
              <p className="text-white/60 leading-relaxed mb-6 font-medium text-sm">
                Veteran owned and operated. Bringing military discipline, honor, and precision to tree care and landscaping across Central and North Texas.
              </p>
@@ -22,15 +26,18 @@ export function Footer() {
           {/* Column 2 */}
           <div>
             <h4 className="text-lg font-bold tracking-widest uppercase mb-6 flex items-center">
-              <div className="w-4 h-[2px] bg-primary mr-3" />
+              <div className="w-4 h-[2px] bg-[#4c5230] mr-3" />
               Services
             </h4>
             <ul className="space-y-3">
-              {['Tree Service', 'Landscaping', 'Turf Installation', 'Hardscaping', 'Fencing', 'Decking & Patios'].map((link) => (
-                <li key={link}>
-                  <a href="#services" className="text-white/60 text-sm hover:text-white transition-colors hover:pl-2 inline-block">
-                    {link}
-                  </a>
+              {SERVICES.map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    to={`/services/${s.slug}`}
+                    className="text-white/60 text-sm hover:text-white transition-colors hover:pl-2 inline-block"
+                  >
+                    {s.title}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -39,7 +46,7 @@ export function Footer() {
           {/* Column 3 */}
           <div>
              <h4 className="text-lg font-bold tracking-widest uppercase mb-6 flex items-center">
-              <div className="w-4 h-[2px] bg-primary mr-3" />
+              <div className="w-4 h-[2px] bg-[#4c5230] mr-3" />
               Contact
             </h4>
             <ul className="space-y-4">
@@ -61,7 +68,7 @@ export function Footer() {
           {/* Column 4 */}
           <div>
             <h4 className="text-lg font-bold tracking-widest uppercase mb-6 flex items-center">
-              <div className="w-4 h-[2px] bg-primary mr-3" />
+              <div className="w-4 h-[2px] bg-[#4c5230] mr-3" />
               Social Media
             </h4>
             <SocialLinks

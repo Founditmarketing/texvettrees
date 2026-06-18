@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { ArrowRight, ArrowDown, Medal, Trees, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
+import { ArrowRight, Medal, ShieldCheck, MapPin, BadgeCheck } from 'lucide-react';
 import { SectionWatermark } from './SectionWatermark';
 
 const TRUST_CHIPS = [
@@ -13,10 +13,10 @@ export function About() {
 
   return (
     <section id="about" className="relative py-24 bg-[#111] border-b border-white/5">
-      <SectionWatermark text="Veteran" />
+      <SectionWatermark text="Veteran" align="top-mobile" />
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-10 max-w-5xl mx-auto">
           {/* Left content */}
           <div className="w-full lg:w-1/2">
             <motion.div
@@ -87,77 +87,39 @@ export function About() {
             </motion.div>
           </div>
 
-          {/* Right: Then & Now diptych */}
+          {/* Right: layered founder photos (matches the About page image layout) */}
           <div className="w-full lg:w-1/2">
-            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-xl overflow-hidden border border-white/10">
-              {/* THEN — military */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: -24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.6 }}
-                className="group/then relative overflow-hidden min-h-[300px] lg:min-h-[520px]"
-              >
-                <img
-                  src="/owner/owner-veteran.jpg"
-                  alt="Richard Maddox in U.S. Army combat gear on a field radio during deployment"
-                  width={1195}
-                  height={1500}
-                  loading="lazy"
-                  decoding="async"
-                  className={`absolute inset-0 w-full h-full object-cover object-[center_22%] grayscale-[.55] contrast-[1.05] ${
-                    reduce ? '' : 'transition-all duration-700 group-hover/then:grayscale-0 group-hover/then:scale-105'
-                  }`}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/90 to-transparent pointer-events-none" />
-                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-[#0a0a0a]/55 border border-[#ccaa5a]/50 text-[#d8b86a] text-[10px] font-bold uppercase tracking-widest px-2.5 py-1">
-                  <Medal className="w-3.5 h-3.5" aria-hidden="true" />
-                  Then
-                </span>
-                <div className="absolute bottom-3 left-3">
-                  <p className="text-white text-xs font-bold uppercase tracking-wide">U.S. Army · Deployed</p>
-                  <p className="text-white/60 text-[11px]">Discipline. Precision. Service.</p>
-                </div>
-              </motion.div>
-
-              {/* NOW — founder */}
-              <motion.div
-                initial={reduce ? { opacity: 0 } : { opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.6, delay: 0.12 }}
-                className="group/now relative overflow-hidden min-h-[300px] lg:min-h-[520px]"
-              >
+            <motion.div
+              initial={reduce ? { opacity: 0 } : { opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6 }}
+              className="relative w-full max-w-md mx-auto lg:ml-0"
+            >
+              <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-white/10">
                 <img
                   src="/owner/owner-now.jpg"
-                  alt="Richard Maddox today, founder of Tex Vet Trees, beside his Vermeer chipper truck in a Central Texas neighborhood"
-                  width={1600}
-                  height={1250}
+                  alt="Richard Maddox today, founder of Tex Vet Trees"
                   loading="lazy"
                   decoding="async"
-                  className={`absolute inset-0 w-full h-full object-cover object-[center_30%] ${
-                    reduce ? '' : 'transition-transform duration-700 group-hover/now:scale-105'
-                  }`}
+                  className="w-full h-full object-cover object-[center_30%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/90 to-transparent pointer-events-none" />
-                <span className="absolute top-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-[#4c5230] text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1">
-                  <Trees className="w-3.5 h-3.5" aria-hidden="true" />
-                  Now
+                <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-[#0a0a0a]/60 border border-[#ccaa5a]/50 text-[#d8b86a] text-[10px] font-bold uppercase tracking-widest px-3 py-1">
+                  <Medal className="w-3.5 h-3.5" aria-hidden="true" />
+                  U.S. Army Veteran
                 </span>
-                <div className="absolute bottom-3 right-3 text-right">
-                  <p className="text-white text-xs font-bold uppercase tracking-wide">Founder · Tex Vet Trees</p>
-                  <p className="text-white/60 text-[11px]">Central &amp; North Texas</p>
-                </div>
-              </motion.div>
-
-              {/* Seam + bridge node (desktop: vertical, mobile: horizontal) */}
-              <div className="absolute left-1/2 top-0 bottom-0 w-[2px] -translate-x-1/2 bg-gradient-to-b from-transparent via-[#4c5230] to-transparent z-10 hidden lg:block pointer-events-none" />
-              <div className="absolute left-0 right-0 top-1/2 h-[2px] -translate-y-1/2 bg-gradient-to-r from-transparent via-[#4c5230] to-transparent z-10 lg:hidden pointer-events-none" />
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0a0a0a] border border-[#4c5230] flex items-center justify-center z-10 pointer-events-none">
-                <ArrowRight className="w-4 h-4 text-[#4c5230] hidden lg:block" aria-hidden="true" />
-                <ArrowDown className="w-4 h-4 text-[#4c5230] lg:hidden" aria-hidden="true" />
               </div>
-            </div>
+              {/* veteran photo inset */}
+              <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 w-28 sm:w-40 aspect-[4/5] overflow-hidden rounded-lg border-4 border-[#111] shadow-2xl shadow-black/50">
+                <img
+                  src="/owner/owner-veteran.jpg"
+                  alt="Richard Maddox during his U.S. Army service"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover grayscale-[.3]"
+                />
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>

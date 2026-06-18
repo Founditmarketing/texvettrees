@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { MessageSquare, X, ChevronDown } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
+import { MessageSquare, X, ChevronDown, Phone } from 'lucide-react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { HUBSPOT_FORM_URL } from './ContactForm';
 
@@ -14,6 +15,7 @@ export function FloatingQuoteButton() {
   const [needsScroll, setNeedsScroll] = useState(false);
   const [nearContact, setNearContact] = useState(false);
   const reduceMotion = useReducedMotion();
+  const { pathname } = useLocation();
 
   const fabRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -28,7 +30,9 @@ export function FloatingQuoteButton() {
   }, []);
 
   // Hide the floating button while the inline contact form is on screen (avoids redundancy/overlap).
+  // Re-runs on route change so it re-finds the #contact section (which only exists on some pages).
   useEffect(() => {
+    setNearContact(false);
     const el = document.getElementById('contact');
     if (!el || typeof IntersectionObserver === 'undefined') return;
     const io = new IntersectionObserver(
@@ -37,7 +41,7 @@ export function FloatingQuoteButton() {
     );
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [pathname]);
 
   // While open: lock page scroll, make the background inert, close on Escape, manage focus + hint.
   useEffect(() => {
@@ -67,6 +71,10 @@ export function FloatingQuoteButton() {
     };
   }, [isOpen, updateNeedsScroll]);
 
+  // The /contact and /work-with-us pages are each built around their own form — a floating
+  // quote button is redundant there (and would push the wrong form on the careers page).
+  if (pathname === '/contact' || pathname === '/work-with-us') return null;
+
   return (
     <>
       {/* Floating action button */}
@@ -83,13 +91,36 @@ export function FloatingQuoteButton() {
         aria-label="Open the free estimate form"
         aria-hidden={nearContact}
         tabIndex={nearContact ? -1 : 0}
-        className={`fixed bottom-6 right-6 z-30 flex items-center justify-center gap-2 w-14 h-14 sm:w-auto sm:h-auto sm:pl-5 sm:pr-6 sm:py-4 bg-[#4c5230] hover:bg-[#3a3f25] text-white rounded-full shadow-2xl shadow-black/50 border border-white/10 font-bold text-xs tracking-widest uppercase ${
+        className={`fixed bottom-6 right-6 z-30 hidden sm:flex items-center justify-center gap-2 sm:w-auto sm:h-auto sm:pl-5 sm:pr-6 sm:py-4 bg-[#4c5230] hover:bg-[#3a3f25] text-white rounded-full shadow-2xl shadow-black/50 border border-white/10 font-bold text-xs tracking-widest uppercase ${
           nearContact ? 'pointer-events-none' : ''
         }`}
       >
         <MessageSquare className="w-5 h-5" />
         <span className="hidden sm:inline">Get a Quote</span>
       </motion.button>
+
+      {/* Mobile sticky action bar — Call Now + Message (Message opens the same quote modal) */}
+      <div
+        className={`sm:hidden fixed inset-x-0 bottom-0 z-30 flex border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur transition-transform duration-300 ${
+          nearContact ? 'translate-y-full' : 'translate-y-0'
+        }`}
+      >
+        <a
+          href="tel:+12544475090"
+          className="flex flex-1 items-center justify-center gap-2 py-4 text-xs font-bold uppercase tracking-widest text-white border-r border-white/10 active:bg-white/5"
+        >
+          <Phone className="w-4 h-4" />
+          Call Now
+        </a>
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          className="flex flex-1 items-center justify-center gap-2 py-4 text-xs font-bold uppercase tracking-widest text-white bg-[#4c5230] active:bg-[#3a3f25]"
+        >
+          <MessageSquare className="w-4 h-4" />
+          Message
+        </button>
+      </div>
 
       {/* Modal — portaled to <body> so the rest of the app can be made inert while it is open */}
       {createPortal(

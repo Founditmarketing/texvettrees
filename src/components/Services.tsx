@@ -1,222 +1,17 @@
-import {
-  useState,
-  useRef,
-  type ReactNode,
-  type PointerEvent as RPointerEvent,
-  type KeyboardEvent as RKeyboardEvent,
-} from 'react';
+import { useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
-import { Trees, Flower2, Leaf, Hammer, Fence, TentTree, Check, ChevronsLeftRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Leaf, Check, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { SectionWatermark } from './SectionWatermark';
+import { BeforeAfterSlider } from './BeforeAfterSlider';
+import { SERVICES, type Service } from '../data/services';
 
-const SAGE = '#a9bd84'; // legible label color over bright photos
-
-type Service = {
-  title: string;
-  description: string;
-  icon: ReactNode;
-  bulletIcon: 'leaf' | 'check';
-  features: string[];
-  before: string;
-  after: string;
-};
-
-const SERVICES: Service[] = [
-  {
-    title: 'Tree Service',
-    description:
-      'Certified trimming, hazardous removals, and tree-health care that protect your home and keep your canopy thriving. From routine pruning to full storm cleanup, we handle the whole job.',
-    icon: <Trees className="w-10 h-10" />,
-    bulletIcon: 'leaf',
-    features: ['Crown thinning & deadwood removal', 'Hazardous & storm-damage takedowns', 'Stump grinding & full haul-off', 'Pest & disease inspections'],
-    before: '/images/14.jpg',
-    after: '/images/treeservice.jpg',
-  },
-  {
-    title: 'Landscaping',
-    description:
-      'Custom design, planting, and maintenance built for the Texas climate. Beds, borders, and color that actually survive the summer — and stay sharp year-round.',
-    icon: <Flower2 className="w-10 h-10" />,
-    bulletIcon: 'leaf',
-    features: ['Native & drought-tolerant plantings', 'Mulch, stone & clean bed borders', 'Seasonal cleanups & refreshes', 'Irrigation-friendly layouts'],
-    before: '/images/IMG_9100.jpg',
-    after: '/images/IMG_9109.jpeg',
-  },
-  {
-    title: 'Turf',
-    description:
-      'Premium synthetic turf that stays green all year with near-zero upkeep — no mowing, no mud, no brown patches. Engineered to drain fast and hold up to heavy use.',
-    icon: <Leaf className="w-10 h-10" />,
-    bulletIcon: 'leaf',
-    features: ['Pet- & kid-safe surfaces', 'Proper drainage base prep', 'UV-stable evergreen blades', 'Putting greens & play areas'],
-    before: '/images/IMG_9462.jpg',
-    after: '/images/IMG_9480.jpg',
-  },
-  {
-    title: 'Hardscaping',
-    description:
-      'Retaining walls, stone pathways, and paver patios engineered to add lasting structure, drainage, and value to your property. Built to hold its line for decades.',
-    icon: <Hammer className="w-10 h-10" />,
-    bulletIcon: 'check',
-    features: ['Paver patios & walkways', 'Engineered retaining walls', 'Fire pits & seating walls', 'Proper grading & drainage'],
-    before: '/images/backyard-before.jpg',
-    after: '/images/backyard-transformation.jpg',
-  },
-  {
-    title: 'Fencing',
-    description:
-      'Durable, good-looking fence lines that lock in privacy and lift curb appeal — built to stand up to Texas weather. Wood, metal, and composite, done right.',
-    icon: <Fence className="w-10 h-10" />,
-    bulletIcon: 'check',
-    features: ['Cedar privacy fencing', 'Steel & pipe ranch fencing', 'Custom gates & access hardware', 'Repairs, restaining & replacement'],
-    before: '/images/IMG_9122.jpg',
-    after: '/images/IMG_9123.jpeg',
-  },
-  {
-    title: 'Decking & Patios',
-    description:
-      'Custom decks, pergolas, and covered patios that turn your backyard into the room you actually want to live in. Designed for shade, gatherings, and Texas evenings.',
-    icon: <TentTree className="w-10 h-10" />,
-    bulletIcon: 'check',
-    features: ['Cedar & composite decking', 'Pergolas & shade structures', 'Covered patios', 'Built-in lighting & seating'],
-    before: '/images/IMG_8971.jpeg',
-    after: '/images/decking.jpg',
-  },
-];
-
-function BeforeAfterSlider({
-  before,
-  after,
-  title,
-  reduce,
-}: {
-  before: string;
-  after: string;
-  title: string;
-  reduce: boolean | null;
-}) {
-  const [pos, setPos] = useState(50);
-  const [dragging, setDragging] = useState(false);
-  const [touched, setTouched] = useState(false);
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const setFromX = (x: number) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    setPos(Math.min(100, Math.max(0, ((x - r.left) / r.width) * 100)));
-  };
-
-  const onPointerDown = (e: RPointerEvent<HTMLDivElement>) => {
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setDragging(true);
-    setTouched(true);
-    setFromX(e.clientX);
-  };
-  const onPointerMove = (e: RPointerEvent<HTMLDivElement>) => {
-    if (!dragging) return;
-    e.preventDefault();
-    setFromX(e.clientX);
-  };
-  const endDrag = (e: RPointerEvent<HTMLDivElement>) => {
-    setDragging(false);
-    try {
-      e.currentTarget.releasePointerCapture(e.pointerId);
-    } catch {
-      /* pointer already released */
-    }
-  };
-
-  const onKeyDown = (e: RKeyboardEvent<HTMLButtonElement>) => {
-    const big = e.shiftKey ? 10 : 2;
-    let next: number | null = null;
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = pos - big;
-    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = pos + big;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = 100;
-    else if (e.key === 'PageDown') next = pos - 10;
-    else if (e.key === 'PageUp') next = pos + 10;
-    if (next !== null) {
-      e.preventDefault();
-      setTouched(true);
-      setPos(Math.min(100, Math.max(0, next)));
-    }
-  };
-
-  const imgClass = `absolute inset-0 w-full h-full object-cover ${
-    reduce ? '' : 'transition-transform duration-700 group-hover:scale-[1.03]'
-  }`;
+function ServiceCard({ service }: { service: Service }) {
+  const reduce = useReducedMotion();
+  const BulletIcon = service.bulletIcon === 'leaf' ? Leaf : Check;
+  const { Icon } = service;
 
   return (
     <div
-      ref={trackRef}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      className="absolute inset-0 select-none cursor-ew-resize"
-      style={{ touchAction: 'none' }}
-    >
-      {/* AFTER (base) */}
-      <img src={after} alt={`${title} — after, completed by Tex Vet Trees`} loading="lazy" decoding="async" className={imgClass} />
-      {/* BEFORE (clipped overlay) */}
-      <div
-        className="absolute inset-0"
-        style={{ clipPath: `inset(0 ${100 - pos}% 0 0)`, transition: dragging || reduce ? 'none' : 'clip-path 150ms ease' }}
-      >
-        <img src={before} alt={`${title} — before`} loading="lazy" decoding="async" className={imgClass} />
-      </div>
-
-      {/* corner labels */}
-      <span
-        className="absolute top-3 left-3 bg-black/50 px-2 py-1 text-[10px] font-bold uppercase tracking-widest"
-        style={{ color: SAGE, opacity: 0.35 + (pos / 100) * 0.65 }}
-      >
-        Before
-      </span>
-      <span
-        className="absolute top-3 right-3 bg-black/50 px-2 py-1 text-[10px] font-bold uppercase tracking-widest"
-        style={{ color: SAGE, opacity: 0.35 + ((100 - pos) / 100) * 0.65 }}
-      >
-        After
-      </span>
-
-      {/* seam */}
-      <div className="absolute top-0 bottom-0 w-[2px] bg-[#4c5230] pointer-events-none" style={{ left: `${pos}%`, transform: 'translateX(-1px)' }} />
-
-      {/* knob (the focusable slider control) */}
-      <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2" style={{ left: `${pos}%` }}>
-        <button
-          type="button"
-          role="slider"
-          tabIndex={0}
-          aria-label={`Drag to compare before and after — ${title}`}
-          aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={Math.round(pos)}
-          aria-valuetext={`${Math.round(pos)}% revealing the after photo`}
-          onKeyDown={onKeyDown}
-          className="grid h-11 w-11 place-items-center rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4c5230] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
-        >
-          <span className={`grid h-9 w-9 place-items-center rounded-full bg-[#4c5230] border border-white/30 shadow-lg ${!touched && !reduce ? 'animate-pulse' : ''}`}>
-            <ChevronsLeftRight className="w-4 h-4 text-white" aria-hidden="true" />
-          </span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function ServiceCard({ service, index }: { service: Service; index: number }) {
-  const reduce = useReducedMotion();
-  const BulletIcon = service.bulletIcon === 'leaf' ? Leaf : Check;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={reduce ? { duration: 0.2 } : { duration: 0.5, delay: index * 0.1 }}
       className={`group h-full overflow-hidden rounded-md border border-white/5 bg-[#111] transition duration-300 ${
         reduce
           ? 'hover:border-[#4c5230]'
@@ -229,7 +24,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
 
       <div className="p-6 sm:p-8">
         <div className="mb-4 inline-block text-[#4c5230] transition-all duration-300 group-hover:scale-110 group-hover:text-white">
-          {service.icon}
+          <Icon className="w-10 h-10" />
         </div>
         <h3 className="mb-3 text-xl sm:text-2xl font-bold uppercase tracking-wide text-white">{service.title}</h3>
         <p className="text-sm leading-relaxed text-white/60">{service.description}</p>
@@ -242,7 +37,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
           ))}
         </ul>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -297,6 +92,18 @@ export function Services() {
         </div>
       </div>
 
+      {/* Mobile swipe hint */}
+      <div className="sm:hidden relative z-10 flex items-center justify-center gap-2 mb-3 text-white/50 text-[11px] font-bold uppercase tracking-widest">
+        Swipe to Explore
+        <motion.span
+          animate={reduce ? undefined : { x: [0, 6, 0] }}
+          transition={{ duration: 1.3, repeat: Infinity, ease: 'easeInOut' }}
+          className="inline-flex text-[#a9bd84]"
+        >
+          <ArrowRight className="w-4 h-4" aria-hidden="true" />
+        </motion.span>
+      </div>
+
       {/* Carousel — full width, bleeds to the right edge */}
       <div className="relative z-10">
         <button
@@ -318,11 +125,11 @@ export function Services() {
 
         <div
           ref={trackRef}
-          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-hide py-6 pl-6 sm:pl-8 lg:pl-12 pr-0 scroll-pl-6 sm:scroll-pl-8 lg:scroll-pl-12"
+          className="flex gap-6 overflow-x-auto overflow-y-hidden overscroll-x-contain snap-x snap-proximity scrollbar-hide py-6 pl-6 sm:pl-8 lg:pl-12 pr-0 scroll-pl-6 sm:scroll-pl-8 lg:scroll-pl-12"
         >
-          {SERVICES.map((service, index) => (
-            <div key={service.title} className="snap-start shrink-0 w-[85%] sm:w-[55%] md:w-[44%] lg:w-[31.5%]">
-              <ServiceCard service={service} index={index} />
+          {SERVICES.map((service) => (
+            <div key={service.slug} className="snap-start shrink-0 w-[68%] sm:w-[55%] md:w-[44%] lg:w-[31.5%]">
+              <ServiceCard service={service} />
             </div>
           ))}
         </div>

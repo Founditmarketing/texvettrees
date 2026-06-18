@@ -16,6 +16,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* keep #hash-targeted sections clear of the fixed header */
+section[id] {
+  scroll-margin-top: 5.5rem;
+}
+
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;

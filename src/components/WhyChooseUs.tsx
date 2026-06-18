@@ -28,7 +28,7 @@ const FEATURES = [
 export function WhyChooseUs() {
   return (
     <section id="why-us" className="relative py-24 bg-[#111] border-y border-white/5 text-white">
-      <SectionWatermark text="Discipline" />
+      <SectionWatermark text="Discipline" align="top-mobile" />
       <div className="container mx-auto px-6 relative z-10">
         
         <div className="max-w-3xl mb-16">

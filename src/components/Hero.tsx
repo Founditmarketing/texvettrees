@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { useIntro } from './Intro';
 
 const BADGES = {
   veteran: { src: '/images/Veteran-Business-400x118-1.png', alt: 'Veteran Owned & Operated' },
@@ -26,13 +27,15 @@ function HeroBadges({ className = '', size = 'sm' }: { className?: string; size?
 }
 
 export function Hero() {
+  const stage = useIntro();
+  const show = stage === 'content';
   return (
     <section className="relative w-full h-screen min-h-[600px] flex items-center bg-[#0a0a0a] overflow-hidden">
-      {/* Background Image */}
+      {/* Background Image — settles into view as the preloader curtain lifts */}
       <motion.div
-        initial={{ scale: 1.05 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: 'easeOut' }}
+        initial={{ scale: 1.1 }}
+        animate={{ scale: stage === 'loading' ? 1.1 : 1 }}
+        transition={{ duration: 1.6, ease: 'easeOut' }}
         className="absolute inset-0 z-0"
       >
         <img
@@ -48,7 +51,7 @@ export function Hero() {
         <div className="max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="flex items-center space-x-4 mb-6"
           >
@@ -60,7 +63,7 @@ export function Hero() {
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-6xl sm:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8 uppercase"
           >
@@ -70,7 +73,7 @@ export function Hero() {
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg opacity-80 max-w-md mb-12"
           >
@@ -79,7 +82,7 @@ export function Hero() {
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <a
@@ -94,7 +97,7 @@ export function Hero() {
           {/* Mobile/tablet: trust badges under the body text, left-aligned */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 1 }}
           >
             <HeroBadges size="sm" className="lg:hidden mt-10" />
@@ -105,7 +108,7 @@ export function Hero() {
       {/* Desktop: trust badges in the bottom-right corner (larger) */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: show ? 1 : 0 }}
         transition={{ duration: 0.8, delay: 1.1 }}
         className="hidden lg:block absolute z-20 right-10 bottom-24"
       >

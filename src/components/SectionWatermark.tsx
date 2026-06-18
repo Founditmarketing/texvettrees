@@ -13,7 +13,8 @@ export function SectionWatermark({
   className = '',
 }: {
   text: string;
-  align?: 'center' | 'top';
+  // 'top-mobile' = top on mobile/tablet, centered on desktop (lg+) so the desktop view is unchanged.
+  align?: 'center' | 'top' | 'top-mobile';
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -21,13 +22,18 @@ export function SectionWatermark({
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const x = useTransform(scrollYProgress, [0, 1], ['12%', '-12%']);
 
+  const vClass =
+    align === 'top'
+      ? 'items-start pt-10 sm:pt-14'
+      : align === 'top-mobile'
+        ? 'items-start pt-10 lg:items-center lg:pt-0'
+        : 'items-center';
+
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={`pointer-events-none absolute inset-0 z-0 flex overflow-hidden ${
-        align === 'top' ? 'items-start pt-10 sm:pt-14' : 'items-center'
-      } ${className}`}
+      className={`pointer-events-none absolute inset-0 z-0 flex overflow-hidden ${vClass} ${className}`}
     >
       <motion.span
         style={reduce ? undefined : { x }}

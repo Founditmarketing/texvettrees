@@ -1,11 +1,11 @@
 import { Star, ShieldCheck, Medal, CheckCircle, Home } from 'lucide-react';
 
 const TRUST_ITEMS = [
-  { text: 'Veteran Owned & Operated', icon: <Medal className="w-5 h-5 text-primary" /> },
-  { text: 'Fully Insured', icon: <ShieldCheck className="w-5 h-5 text-primary" /> },
-  { text: 'Military Discipline', icon: <Star className="w-5 h-5 text-primary" /> },
-  { text: '5-Star Rated', icon: <CheckCircle className="w-5 h-5 text-primary" /> },
-  { text: 'Commercial & Residential', icon: <Home className="w-5 h-5 text-primary" /> },
+  { text: 'Veteran Owned & Operated', icon: <Medal className="w-5 h-5 text-[#4c5230]" /> },
+  { text: 'Fully Insured', icon: <ShieldCheck className="w-5 h-5 text-[#4c5230]" /> },
+  { text: 'Military Discipline', icon: <Star className="w-5 h-5 text-[#4c5230]" /> },
+  { text: '5-Star Rated', icon: <CheckCircle className="w-5 h-5 text-[#4c5230]" /> },
+  { text: 'Commercial & Residential', icon: <Home className="w-5 h-5 text-[#4c5230]" /> },
 ];
 
 export function TrustBanner() {

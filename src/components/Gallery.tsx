@@ -22,7 +22,7 @@ const PHOTOS: Photo[] = [
 
 const SLIDE_SPRING = { type: 'spring', stiffness: 260, damping: 30 } as const;
 
-export function Gallery() {
+export function Gallery({ showHeader = true }: { showHeader?: boolean }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [direction, setDirection] = useState(0);
   const reduce = useReducedMotion();
@@ -71,11 +71,21 @@ export function Gallery() {
 
   const current = openIndex !== null ? PHOTOS[openIndex] : null;
 
+  // On the dedicated gallery page (showHeader=false) the body runs nearly edge-to-edge, minimal padding.
+  const tight = !showHeader;
+  const gridWrapClass = `relative z-10 ${tight ? 'px-1' : 'px-2 sm:px-3'}`;
+  const gridClass = `grid grid-cols-2 md:grid-cols-4 ${tight ? 'gap-1.5' : 'gap-2 sm:gap-3'}`;
+  const tileAspect = 'aspect-[4/3]';
+
   return (
-    <section id="gallery" className="relative py-24 bg-[#0a0a0a] border-t border-white/5">
-      <SectionWatermark text="Portfolio" align="top" />
+    <section
+      id="gallery"
+      className={`relative bg-[#0a0a0a] border-t border-white/5 ${showHeader ? 'py-24' : 'pt-4 pb-16'}`}
+    >
+      {showHeader && <SectionWatermark text="Portfolio" align="top" />}
 
       {/* Header */}
+      {showHeader && (
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-10">
           <motion.div
@@ -108,10 +118,11 @@ export function Gallery() {
           </motion.p>
         </div>
       </div>
+      )}
 
       {/* Full-width uniform grid (even rows / even bottom) */}
-      <div className="px-2 sm:px-3 relative z-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
+      <div className={gridWrapClass}>
+        <div className={gridClass}>
           {PHOTOS.map((photo, i) => (
             <motion.button
               key={photo.src}
@@ -125,7 +136,7 @@ export function Gallery() {
               transition={reduce ? { duration: 0.2 } : { duration: 0.4, delay: (i % 4) * 0.06 }}
               onClick={() => openAt(i)}
               aria-label={`Open larger view (${photo.category})`}
-              className="group relative aspect-[4/3] overflow-hidden bg-[#111] cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4c5230] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
+              className={`group relative ${tileAspect} overflow-hidden bg-[#111] cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4c5230] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]`}
             >
               <img
                 src={photo.src}
