@@ -16,6 +16,8 @@ import { ReviewsPage } from './pages/ReviewsPage';
 import { ServiceDetailPage } from './pages/ServiceDetailPage';
 import { WorkWithUsPage } from './pages/WorkWithUsPage';
 import { CommunityPage } from './pages/CommunityPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
+import { TermsPage } from './pages/TermsPage';
 
 export default function App() {
   return (
@@ -32,6 +34,8 @@ export default function App() {
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/work-with-us" element={<WorkWithUsPage />} />
             <Route path="/community" element={<CommunityPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
             <Route path="*" element={<Home />} />
           </Route>
         </Routes>

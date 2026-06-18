@@ -22,13 +22,13 @@ function ServiceCard({ service }: { service: Service }) {
         <BeforeAfterSlider before={service.before} after={service.after} title={service.title} reduce={reduce} />
       </div>
 
-      <div className="p-6 sm:p-8">
-        <div className="mb-4 inline-block text-[#4c5230] transition-all duration-300 group-hover:scale-110 group-hover:text-white">
-          <Icon className="w-10 h-10" />
+      <div className="p-5 sm:p-8">
+        <div className="mb-3 sm:mb-4 inline-block text-[#4c5230] transition-all duration-300 group-hover:scale-110 group-hover:text-white">
+          <Icon className="w-9 h-9 sm:w-10 sm:h-10" />
         </div>
-        <h3 className="mb-3 text-xl sm:text-2xl font-bold uppercase tracking-wide text-white">{service.title}</h3>
-        <p className="text-sm leading-relaxed text-white/60">{service.description}</p>
-        <ul className="mt-5 space-y-2 opacity-90 transition-opacity duration-300 group-hover:opacity-100">
+        <h3 className="mb-2 sm:mb-3 text-lg sm:text-2xl font-bold uppercase tracking-wide text-white">{service.title}</h3>
+        <p className="text-sm leading-relaxed text-white/60 line-clamp-2 sm:line-clamp-none">{service.description}</p>
+        <ul className="mt-4 sm:mt-5 space-y-2 opacity-90 transition-opacity duration-300 group-hover:opacity-100 hidden sm:block">
           {service.features.map((f) => (
             <li key={f} className="flex items-start gap-2">
               <BulletIcon className="mt-0.5 h-4 w-4 shrink-0 text-[#4c5230]" aria-hidden="true" />

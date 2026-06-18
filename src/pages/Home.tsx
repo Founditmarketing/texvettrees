@@ -1,4 +1,5 @@
 import { Hero } from '../components/Hero';
+import { FinancingBanner } from '../components/FinancingBanner';
 import { TrustBanner } from '../components/TrustBanner';
 import { About } from '../components/About';
 import { Services } from '../components/Services';
@@ -12,8 +13,9 @@ export function Home() {
     <>
       <Hero />
       <TrustBanner />
-      <About />
+      <FinancingBanner />
       <Services />
+      <About />
       <WhyChooseUs />
       <Gallery />
       <Blog />

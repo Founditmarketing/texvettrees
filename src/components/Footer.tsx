@@ -99,10 +99,18 @@ export function Footer() {
           ))}
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between">
-           <p className="text-white/40 text-[10px] font-bold tracking-widest uppercase mb-4 md:mb-0">
+        <div className="border-t border-white/5 pt-8 flex flex-col gap-4 md:flex-row items-center justify-between">
+           <p className="text-white/40 text-[10px] font-bold tracking-widest uppercase">
              &copy; 2026 Tex Vet Trees. All Rights Reserved.
            </p>
+           <div className="flex items-center gap-5">
+             <Link to="/privacy-policy" className="text-white/40 text-[10px] font-bold tracking-widest uppercase hover:text-white transition-colors">
+               Privacy Policy
+             </Link>
+             <Link to="/terms" className="text-white/40 text-[10px] font-bold tracking-widest uppercase hover:text-white transition-colors">
+               Terms &amp; Conditions
+             </Link>
+           </div>
            <p className="text-white/40 text-[10px] font-bold tracking-widest uppercase">
              Military Discipline. Professional Results.
            </p>

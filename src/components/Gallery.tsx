@@ -80,7 +80,7 @@ export function Gallery({ showHeader = true }: { showHeader?: boolean }) {
   return (
     <section
       id="gallery"
-      className={`relative bg-[#0a0a0a] border-t border-white/5 ${showHeader ? 'py-24' : 'pt-4 pb-16'}`}
+      className={`relative bg-[#0a0a0a] border-t border-white/5 ${showHeader ? 'pt-24 pb-0' : 'pt-4 pb-16'}`}
     >
       {showHeader && <SectionWatermark text="Portfolio" align="top" />}
 

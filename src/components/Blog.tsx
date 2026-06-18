@@ -44,7 +44,7 @@ export function Blog({
       id="blog"
       className={`relative bg-[#0a0a0a] border-t border-white/5 ${showHeader ? 'py-24' : 'pt-12 pb-24'}`}
     >
-      {showHeader && <SectionWatermark text="Dispatches" align="top" />}
+      {showHeader && <SectionWatermark text="Headlines" align="top" />}
       <div className="container mx-auto px-6 relative z-10">
         {showHeader && (
           <div className="text-center mb-12">
@@ -65,7 +65,7 @@ export function Blog({
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight"
             >
-              Dispatches
+              In The News
             </motion.h2>
           </div>
         )}

@@ -46,6 +46,16 @@ export function Header() {
     setMobileServicesOpen(false);
   }, [location.pathname, location.hash]);
 
+  // Lock page scroll while the mobile drawer is open.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isMobileMenuOpen]);
+
   // Close the desktop mega menu on Escape and return focus to the trigger.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -236,63 +246,139 @@ export function Header() {
       </div>
       </motion.div>
 
-      {/* Mobile / tablet Nav */}
+      {/* Mobile / tablet slide-out drawer (covers the page incl. the sticky footer) */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 w-full h-screen bg-[#4c5230] flex flex-col items-center justify-center gap-5 z-40 xl:hidden overflow-y-auto py-24"
-          >
-            {NAV.map((item) => {
-              if (item.dropdown) {
-                return (
-                  <div key={item.name} className="flex flex-col items-center gap-4">
-                    <button
-                      type="button"
-                      aria-expanded={mobileServicesOpen}
-                      onClick={() => setMobileServicesOpen((v) => !v)}
-                      className="inline-flex items-center gap-2 text-white text-2xl tracking-widest uppercase font-bold"
+          <div className="xl:hidden">
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={closeMobile}
+              className="fixed inset-0 z-[55] bg-black/70 backdrop-blur-sm"
+            />
+
+            {/* Panel */}
+            <motion.div
+              key="drawer"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 320, damping: 34 }}
+              className="fixed top-0 right-0 bottom-0 z-[60] flex w-[82%] max-w-sm flex-col border-l border-white/10 bg-[#0a0a0a] shadow-2xl shadow-black/60"
+            >
+              {/* Drawer header */}
+              <div className="flex h-16 shrink-0 items-center justify-between border-b border-white/10 bg-[#3a3f25] px-5">
+                <span className="text-sm font-black uppercase tracking-widest text-white">Menu</span>
+                <button
+                  type="button"
+                  onClick={closeMobile}
+                  aria-label="Close menu"
+                  className="rounded-full p-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              {/* Nav */}
+              <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-3 py-3">
+                {NAV.map((item) => {
+                  if (item.dropdown) {
+                    return (
+                      <div key={item.name}>
+                        <button
+                          type="button"
+                          aria-expanded={mobileServicesOpen}
+                          onClick={() => setMobileServicesOpen((v) => !v)}
+                          className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-widest text-white/85 transition-colors hover:bg-white/5 hover:text-white"
+                        >
+                          {item.name}
+                          <ChevronDown
+                            className={`h-4 w-4 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                        <AnimatePresence initial={false}>
+                          {mobileServicesOpen && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="my-1 ml-5 flex flex-col border-l border-white/10">
+                                {SERVICES.map((s) => (
+                                  <Link
+                                    key={s.slug}
+                                    to={`/services/${s.slug}`}
+                                    onClick={closeMobile}
+                                    className="px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white/55 transition-colors hover:text-white"
+                                  >
+                                    {s.title}
+                                  </Link>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+                  if (item.button) {
+                    return (
+                      <Link
+                        key={item.name}
+                        to={item.to ?? '/'}
+                        onClick={closeMobile}
+                        className="mb-1 mt-2 rounded-lg bg-[#4c5230] px-4 py-3 text-center text-sm font-bold uppercase tracking-widest text-white transition-colors hover:bg-[#3a3f25]"
+                      >
+                        {item.name}
+                      </Link>
+                    );
+                  }
+                  if (item.external) {
+                    return (
+                      <a
+                        key={item.name}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMobile}
+                        className="rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-widest text-white/85 transition-colors hover:bg-white/5 hover:text-white"
+                      >
+                        {item.name}
+                      </a>
+                    );
+                  }
+                  const active = item.to === location.pathname;
+                  return (
+                    <Link
+                      key={item.name}
+                      to={item.to ?? '/'}
+                      onClick={closeMobile}
+                      className={`rounded-lg px-4 py-3 text-sm font-bold uppercase tracking-widest transition-colors ${
+                        active ? 'bg-white/10 text-white' : 'text-white/85 hover:bg-white/5 hover:text-white'
+                      }`}
                     >
                       {item.name}
-                      <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-200 ${mobileServicesOpen ? 'rotate-180' : ''}`}
-                        aria-hidden="true"
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {mobileServicesOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="flex flex-col items-center gap-3 overflow-hidden"
-                        >
-                          {SERVICES.map((s) => (
-                            <Link
-                              key={s.slug}
-                              to={`/services/${s.slug}`}
-                              onClick={closeMobile}
-                              className="text-white/75 hover:text-white text-base tracking-widest uppercase font-semibold transition-colors"
-                            >
-                              {s.title}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-              return renderItem(
-                item,
-                'text-white text-2xl tracking-widest uppercase font-bold',
-                'border-2 border-white text-white hover:bg-white hover:text-[#4c5230] px-8 py-4 font-bold text-xs tracking-widest uppercase transition-colors',
-                closeMobile,
-              );
-            })}
-          </motion.div>
+                    </Link>
+                  );
+                })}
+              </nav>
+
+              {/* Socials */}
+              <div className="shrink-0 border-t border-white/10 px-5 py-4">
+                <SocialLinks
+                  className="justify-center gap-2"
+                  linkClassName="text-white/60 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+                  iconClassName="w-5 h-5"
+                />
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </header>

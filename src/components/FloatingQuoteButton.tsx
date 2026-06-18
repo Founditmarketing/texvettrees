@@ -77,49 +77,69 @@ export function FloatingQuoteButton() {
 
   return (
     <>
-      {/* Floating action button */}
-      <motion.button
-        ref={fabRef}
-        type="button"
-        onClick={() => setIsOpen(true)}
+      {/* Desktop floating cluster: quick-call phone + Get a Quote */}
+      <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: nearContact ? 0 : 1, scale: nearContact ? 0.8 : 1 }}
         transition={{ type: 'spring', stiffness: 200, damping: 18 }}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        aria-haspopup="dialog"
-        aria-label="Open the free estimate form"
         aria-hidden={nearContact}
-        tabIndex={nearContact ? -1 : 0}
-        className={`fixed bottom-6 right-6 z-30 hidden sm:flex items-center justify-center gap-2 sm:w-auto sm:h-auto sm:pl-5 sm:pr-6 sm:py-4 bg-[#4c5230] hover:bg-[#3a3f25] text-white rounded-full shadow-2xl shadow-black/50 border border-white/10 font-bold text-xs tracking-widest uppercase ${
+        className={`fixed bottom-6 right-6 z-30 hidden sm:flex items-center gap-3 ${
           nearContact ? 'pointer-events-none' : ''
         }`}
       >
-        <MessageSquare className="w-5 h-5" />
-        <span className="hidden sm:inline">Get a Quote</span>
-      </motion.button>
-
-      {/* Mobile sticky action bar — Call Now + Message (Message opens the same quote modal) */}
-      <div
-        className={`sm:hidden fixed inset-x-0 bottom-0 z-30 flex border-t border-white/10 bg-[#0a0a0a]/95 backdrop-blur transition-transform duration-300 ${
-          nearContact ? 'translate-y-full' : 'translate-y-0'
-        }`}
-      >
-        <a
+        <motion.a
           href="tel:+12544475090"
-          className="flex flex-1 items-center justify-center gap-2 py-4 text-xs font-bold uppercase tracking-widest text-white border-r border-white/10 active:bg-white/5"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-label="Call (254) 447-5090"
+          tabIndex={nearContact ? -1 : 0}
+          className="flex h-[52px] w-[52px] items-center justify-center rounded-full border border-black/10 bg-white text-[#4c5230] shadow-2xl shadow-black/50 transition-colors hover:bg-[#0a0a0a] hover:text-white"
         >
-          <Phone className="w-4 h-4" />
-          Call Now
-        </a>
-        <button
+          <Phone className="w-5 h-5" />
+        </motion.a>
+        <motion.button
+          ref={fabRef}
           type="button"
           onClick={() => setIsOpen(true)}
-          className="flex flex-1 items-center justify-center gap-2 py-4 text-xs font-bold uppercase tracking-widest text-white bg-[#4c5230] active:bg-[#3a3f25]"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          aria-haspopup="dialog"
+          aria-label="Open the free estimate form"
+          tabIndex={nearContact ? -1 : 0}
+          className="flex items-center justify-center gap-2 pl-5 pr-6 py-4 bg-[#4c5230] hover:bg-[#3a3f25] text-white rounded-full shadow-2xl shadow-black/50 border border-white/10 font-bold text-xs tracking-widest uppercase"
         >
-          <MessageSquare className="w-4 h-4" />
-          Message
-        </button>
+          <MessageSquare className="w-5 h-5" />
+          Get a Quote
+        </motion.button>
+      </motion.div>
+
+      {/* Mobile sticky action dock — Call Now + Message (Message opens the same quote modal) */}
+      <div
+        className={`sm:hidden pointer-events-none fixed inset-x-0 bottom-0 z-30 px-3 pb-3 pt-10 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent transition-transform duration-300 ${
+          nearContact ? 'translate-y-[130%]' : 'translate-y-0'
+        }`}
+      >
+        <div className="pointer-events-auto flex items-stretch gap-2 rounded-2xl border border-white/10 bg-[#111]/80 p-1.5 shadow-[0_12px_40px_-8px_rgba(0,0,0,0.85)] backdrop-blur-xl">
+          <a
+            href="tel:+12544475090"
+            className="flex flex-1 items-center justify-center gap-2.5 rounded-xl border border-white/10 bg-white/[0.04] py-3.5 text-[13px] font-bold uppercase tracking-wide text-white transition-transform active:scale-95"
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#4c5230]/30 text-[#a9bd84]">
+              <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+            Call Now
+          </a>
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="flex flex-1 items-center justify-center gap-2.5 rounded-xl bg-gradient-to-br from-[#5a6139] to-[#3a3f25] py-3.5 text-[13px] font-bold uppercase tracking-wide text-white shadow-lg shadow-[#4c5230]/50 transition-transform active:scale-95"
+          >
+            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15 text-white">
+              <MessageSquare className="h-3.5 w-3.5" aria-hidden="true" />
+            </span>
+            Message
+          </button>
+        </div>
       </div>
 
       {/* Modal — portaled to <body> so the rest of the app can be made inert while it is open */}

@@ -31,11 +31,11 @@ export function Hero() {
   const show = stage === 'content';
   return (
     <section className="relative w-full h-screen min-h-[600px] flex items-center bg-[#0a0a0a] overflow-hidden">
-      {/* Background Image — settles into view as the preloader curtain lifts */}
+      {/* Background Image — continuous slow Ken Burns zoom (disabled for reduced-motion via MotionConfig) */}
       <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: stage === 'loading' ? 1.1 : 1 }}
-        transition={{ duration: 1.6, ease: 'easeOut' }}
+        initial={{ scale: 1.05 }}
+        animate={{ scale: 1.2 }}
+        transition={{ duration: 18, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
         className="absolute inset-0 z-0"
       >
         <img
@@ -48,7 +48,7 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-6 relative z-20 pt-20">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl lg:max-w-none">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -65,10 +65,10 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={show ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-6xl sm:text-7xl lg:text-8xl font-black text-white leading-[0.9] tracking-tighter mb-8 uppercase"
+            className="text-6xl sm:text-7xl lg:text-[4.75rem] xl:text-[5.75rem] 2xl:text-[7rem] font-black text-white leading-[0.9] tracking-tighter mb-8 uppercase lg:whitespace-nowrap"
           >
-            Built on <br />
-            <span className="text-[#4c5230]">Honor & Integrity.</span>
+            Tree Care Built On <br />
+            <span className="text-[#4c5230]">Honor & Integrity</span>
           </motion.h1>
 
           <motion.p
