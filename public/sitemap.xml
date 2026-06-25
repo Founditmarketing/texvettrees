@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://texvettrees.com/</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Service pages -->
+  <url>
+    <loc>https://texvettrees.com/services/tree-service</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/services/landscaping</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/services/turf</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/services/hardscaping</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/services/fencing</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/services/decking-patios</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Core pages -->
+  <url>
+    <loc>https://texvettrees.com/about</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/contact</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/reviews</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/gallery</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Secondary pages -->
+  <url>
+    <loc>https://texvettrees.com/blog</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/work-with-us</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/community</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Legal -->
+  <url>
+    <loc>https://texvettrees.com/privacy-policy</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://texvettrees.com/terms</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
