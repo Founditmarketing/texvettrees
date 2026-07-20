@@ -6,18 +6,18 @@ import { SectionWatermark } from './SectionWatermark';
 
 type Category = 'Tree Service' | 'Landscaping' | 'Turf' | 'Hardscaping' | 'Fencing' | 'Decking & Patios';
 
-type Photo = { src: string; alt: string; category: Category; w: number; h: number };
+type Photo = { src: string; alt: string; category: Category; w: number; h: number; before?: string };
 
-// Curated finished-result shots only — no "before" photos.
+// Finished-result shots; `before` (when available) is revealed by a hover flip.
 const PHOTOS: Photo[] = [
-  { src: '/images/treeservice.jpg', category: 'Tree Service', alt: 'Two mature, healthy trees in a maintained front yard', w: 1000, h: 789 },
-  { src: '/images/IMG_9109.jpeg', category: 'Landscaping', alt: 'Home with fresh gravel landscaping beds and clean borders', w: 1200, h: 1600 },
+  { src: '/images/treeservice.jpg', before: '/images/14.jpg', category: 'Tree Service', alt: 'Two mature, healthy trees in a maintained front yard', w: 1000, h: 789 },
+  { src: '/images/IMG_9109.jpeg', before: '/images/IMG_9100.jpg', category: 'Landscaping', alt: 'Home with fresh gravel landscaping beds and clean borders', w: 1200, h: 1600 },
   { src: '/images/IMG_9462.jpg', category: 'Landscaping', alt: 'Backyard rock-bordered landscaping with a built-in bench', w: 1600, h: 1200 },
   { src: '/images/IMG_9016.jpg', category: 'Turf', alt: 'Backyard with synthetic turf, a paver fire pit and Adirondack chairs', w: 1024, h: 1024 },
-  { src: '/images/IMG_9480.jpg', category: 'Turf', alt: 'Pergola-shaded patio over green synthetic turf', w: 1264, h: 848 },
-  { src: '/images/backyard-transformation.jpg', category: 'Hardscaping', alt: 'Luxury paver patio with a fire pit and pergola at dusk', w: 1435, h: 1600 },
-  { src: '/images/decking.jpg', category: 'Decking & Patios', alt: 'Custom cedar pergola over a full brick patio', w: 1024, h: 1024 },
-  { src: '/images/IMG_9123.jpeg', category: 'Fencing', alt: 'Newly built cedar privacy fence', w: 1024, h: 1024 },
+  { src: '/images/IMG_9480.jpg', before: '/images/IMG_9462.jpg', category: 'Turf', alt: 'Pergola-shaded patio over green synthetic turf', w: 1264, h: 848 },
+  { src: '/images/backyard-transformation.jpg', before: '/images/backyard-before.jpg', category: 'Hardscaping', alt: 'Luxury paver patio with a fire pit and pergola at dusk', w: 1435, h: 1600 },
+  { src: '/images/decking.jpg', before: '/images/IMG_8971.jpeg', category: 'Decking & Patios', alt: 'Custom cedar pergola over a full brick patio', w: 1024, h: 1024 },
+  { src: '/images/IMG_9123.jpeg', before: '/images/IMG_9122.jpg', category: 'Fencing', alt: 'Newly built cedar privacy fence', w: 1024, h: 1024 },
 ];
 
 const SLIDE_SPRING = { type: 'spring', stiffness: 260, damping: 30 } as const;
@@ -138,20 +138,60 @@ export function Gallery({ showHeader = true }: { showHeader?: boolean }) {
               aria-label={`Open larger view (${photo.category})`}
               className={`group relative ${tileAspect} overflow-hidden bg-[#111] cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4c5230] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]`}
             >
-              <img
-                src={photo.src}
-                alt={photo.alt}
-                width={photo.w}
-                height={photo.h}
-                loading="lazy"
-                decoding="async"
-                className="block w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/25 group-hover:opacity-100 group-focus-visible:bg-black/25 group-focus-visible:opacity-100">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-[#4c5230]/90 text-white">
-                  <Maximize2 className="h-5 w-5" />
-                </span>
-              </div>
+              {photo.before ? (
+                /* Hover flip: after photo on the front, before photo on the back */
+                <div className="absolute inset-0 [perspective:1200px]">
+                  <div
+                    className={`relative h-full w-full [transform-style:preserve-3d] ${
+                      reduce ? '' : 'transition-transform duration-700 ease-out'
+                    } group-hover:[transform:rotateY(180deg)] group-focus-visible:[transform:rotateY(180deg)]`}
+                  >
+                    <div className="absolute inset-0 [backface-visibility:hidden]">
+                      <img
+                        src={photo.src}
+                        alt={photo.alt}
+                        width={photo.w}
+                        height={photo.h}
+                        loading="lazy"
+                        decoding="async"
+                        className="block w-full h-full object-cover"
+                      />
+                      <span className="absolute top-3 right-3 bg-black/50 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[#a9bd84]">
+                        After
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                      <img
+                        src={photo.before}
+                        alt={`${photo.alt} — before`}
+                        loading="lazy"
+                        decoding="async"
+                        className="block w-full h-full object-cover"
+                      />
+                      <span className="absolute top-3 left-3 bg-black/50 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-[#a9bd84]">
+                        Before
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={photo.src}
+                    alt={photo.alt}
+                    width={photo.w}
+                    height={photo.h}
+                    loading="lazy"
+                    decoding="async"
+                    className="block w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/25 group-hover:opacity-100 group-focus-visible:bg-black/25 group-focus-visible:opacity-100">
+                    <span className="grid h-11 w-11 place-items-center rounded-full bg-[#4c5230]/90 text-white">
+                      <Maximize2 className="h-5 w-5" />
+                    </span>
+                  </div>
+                </>
+              )}
             </motion.button>
           ))}
         </div>
