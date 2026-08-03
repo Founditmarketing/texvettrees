@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { HUBSPOT_FORM_URL } from '../components/ContactForm';
 import { SocialLinks } from '../components/SocialLinks';
 import { SectionWatermark } from '../components/SectionWatermark';
+import { TRUST_BADGES } from '../data/badges';
 
 const CONTACTS = [
   { Icon: Phone, label: '(254) 447-5090', sub: 'Call or text', href: 'tel:+12544475090' },
@@ -11,11 +12,6 @@ const CONTACTS = [
   { Icon: ShieldCheck, label: 'Veteran-Owned & Fully Insured', sub: 'Free estimates', href: null },
 ];
 
-const BADGES = [
-  { src: '/images/Veteran-Business-400x118-1.png', alt: 'Veteran Owned & Operated' },
-  { src: '/images/Waco-Camber-of-Commerce-PNG-200x74-1.png', alt: 'Greater Waco Chamber of Commerce' },
-  { src: '/images/bbb-trust-logo-3-400x162-1.webp', alt: 'BBB Accredited Business' },
-];
 
 export function ContactPage() {
   return (
@@ -92,7 +88,7 @@ export function ContactPage() {
             <div>
               <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-3">Accredited &amp; Recognized</p>
               <div className="flex flex-wrap items-center gap-3">
-                {BADGES.map((b) => (
+                {TRUST_BADGES.map((b) => (
                   <div key={b.alt} className="bg-white rounded-md h-12 px-3 flex items-center">
                     <img src={b.src} alt={b.alt} className="max-h-7 w-auto" />
                   </div>
