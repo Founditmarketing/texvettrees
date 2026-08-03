@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import { SocialLinks } from './SocialLinks';
 import { SERVICES } from '../data/services';
+import { TRUST_BADGES } from '../data/badges';
 
 export function Footer() {
   return (
@@ -85,14 +86,7 @@ export function Footer() {
           <span className="text-white/40 text-[10px] font-bold tracking-widest uppercase mr-2">
             Accredited &amp; Recognized
           </span>
-          {[
-            { src: '/images/Veteran-Business-400x118-1.png', alt: 'Veteran Owned & Operated' },
-            { src: '/images/Waco-Camber-of-Commerce-PNG-200x74-1.png', alt: 'Greater Waco Chamber of Commerce' },
-            { src: '/images/McGregor-Chamber-Logo.png', alt: 'McGregor Chamber of Commerce' },
-            { src: '/images/Greater-Hewitt-Chamber-Logo.png', alt: 'Greater Hewitt Chamber of Commerce' },
-            { src: '/images/ISA-Logo.png', alt: 'International Society of Arboriculture' },
-            { src: '/images/bbb-trust-logo-3-400x162-1.webp', alt: 'BBB Accredited Business' },
-          ].map((badge) => (
+          {TRUST_BADGES.map((badge) => (
             <div
               key={badge.alt}
               className="bg-white rounded-md px-4 py-2 flex items-center justify-center h-14"

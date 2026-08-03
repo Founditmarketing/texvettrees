@@ -1,27 +1,18 @@
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useIntro } from './Intro';
+import { TRUST_BADGES } from '../data/badges';
 
-const BADGES = {
-  veteran: { src: '/images/Veteran-Business-400x118-1.png', alt: 'Veteran Owned & Operated' },
-  waco: { src: '/images/Waco-Camber-of-Commerce-PNG-200x74-1.png', alt: 'Greater Waco Chamber of Commerce' },
-  bbb: { src: '/images/bbb-white.png', alt: 'BBB Accredited Business' },
-};
-
-// No backgrounds, no glow/shadow. The first two logos keep their real colors/detail (flag, bridge,
-// two-tone text); BBB reads fine as flat white.
+// Same badge set as the footer, on white cards so every logo reads over the photo.
 function HeroBadges({ className = '', size = 'sm' }: { className?: string; size?: 'sm' | 'lg' }) {
-  const h = size === 'lg' ? 'h-12' : 'h-9';
+  const card = size === 'lg' ? 'h-12 px-3 py-1.5' : 'h-9 px-2.5 py-1';
   return (
-    <div className={`flex items-center gap-5 sm:gap-7 ${className}`}>
-      <img src={BADGES.veteran.src} alt={BADGES.veteran.alt} className={`${h} w-auto`} />
-      <img src={BADGES.waco.src} alt={BADGES.waco.alt} className={`${h} w-auto`} />
-      <img
-        src={BADGES.bbb.src}
-        alt={BADGES.bbb.alt}
-        className={`${h} w-auto opacity-90`}
-        style={{ filter: 'brightness(0) invert(1)' }}
-      />
+    <div className={`flex flex-wrap items-center gap-2.5 sm:gap-3 ${className}`}>
+      {TRUST_BADGES.map((b) => (
+        <div key={b.alt} className={`bg-white rounded-md flex items-center justify-center ${card}`}>
+          <img src={b.src} alt={b.alt} className="h-full w-auto object-contain" />
+        </div>
+      ))}
     </div>
   );
 }
