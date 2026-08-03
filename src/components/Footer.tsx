@@ -90,6 +90,7 @@ export function Footer() {
             { src: '/images/Waco-Camber-of-Commerce-PNG-200x74-1.png', alt: 'Greater Waco Chamber of Commerce' },
             { src: '/images/McGregor-Chamber-Logo.png', alt: 'McGregor Chamber of Commerce' },
             { src: '/images/Greater-Hewitt-Chamber-Logo.png', alt: 'Greater Hewitt Chamber of Commerce' },
+            { src: '/images/ISA-Logo.png', alt: 'International Society of Arboriculture' },
             { src: '/images/bbb-trust-logo-3-400x162-1.webp', alt: 'BBB Accredited Business' },
           ].map((badge) => (
             <div
