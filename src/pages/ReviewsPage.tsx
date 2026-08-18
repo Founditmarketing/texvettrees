@@ -2,6 +2,8 @@ import { motion } from 'motion/react';
 import { Star, ArrowUpRight } from 'lucide-react';
 import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
+import { PageSEO } from '../components/PageSEO';
+import { BUSINESS_NAME } from '../data/business';
 
 type PlatformKey = 'google' | 'facebook' | 'angi' | 'thumbtack' | 'yelp';
 
@@ -99,6 +101,33 @@ const PLATFORMS: Record<
 
 const PLATFORM_ORDER = Object.keys(PLATFORMS) as PlatformKey[];
 
+// Individual Review schema for the reviews already shown on this page (all verified 5-star, see Stars component above).
+// Deliberately no aggregateRating here — that requires real total review counts/averages pulled from each platform,
+// which we don't have on file; adding one with invented numbers would be exactly the fabricated data this audit flags.
+const REVIEWS_JSON_LD = REVIEWS.map((review) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Review',
+  itemReviewed: {
+    '@type': 'LocalBusiness',
+    name: BUSINESS_NAME,
+  },
+  author: {
+    '@type': 'Person',
+    name: review.name,
+  },
+  reviewBody: review.quote,
+  reviewRating: {
+    '@type': 'Rating',
+    ratingValue: '5',
+    bestRating: '5',
+    worstRating: '1',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: PLATFORMS[review.platform].label,
+  },
+}));
+
 function PlatformIcon({ platform, className = 'h-5 w-5' }: { platform: PlatformKey; className?: string }) {
   const p = PLATFORMS[platform];
   return (
@@ -127,6 +156,12 @@ function Stars() {
 export function ReviewsPage() {
   return (
     <>
+      <PageSEO
+        title="Reviews | Tex Vet Trees & Landscaping"
+        description="Read real reviews from Tex Vet Trees customers across Google, Facebook, Yelp, Angi, and Thumbtack — veteran-owned tree service and landscaping in Central & North Texas."
+        path="/reviews"
+        jsonLd={REVIEWS_JSON_LD}
+      />
       <PageHero
         eyebrow="Trusted by Central Texas"
         title="Reviews"

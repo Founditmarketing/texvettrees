@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { PawPrint, Calendar, Medal, Handshake, TrendingUp, Leaf } from 'lucide-react';
 import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
+import { PageSEO } from '../components/PageSEO';
 
 const SUPPORT = [
   { Icon: PawPrint, title: 'Cameron Park Zoo Sponsorship', desc: 'Proud supporters of conservation and education in our community.' },
@@ -39,6 +40,11 @@ function Card({ Icon, title, desc, surface }: Item & { surface: string }) {
 export function CommunityPage() {
   return (
     <>
+      <PageSEO
+        title="Community | Tex Vet Trees & Landscaping"
+        description="See how Tex Vet Trees gives back to Central & North Texas — from Cameron Park Zoo sponsorship to veteran outreach and local event support."
+        path="/community"
+      />
       <PageHero
         eyebrow="Community Involvement"
         title="Community"

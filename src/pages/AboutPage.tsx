@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Medal } from 'lucide-react';
 import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
+import { PageSEO } from '../components/PageSEO';
 
 const VALUES = [
   {
@@ -25,6 +26,11 @@ const VALUES = [
 export function AboutPage() {
   return (
     <>
+      <PageSEO
+        title="About Us | Tex Vet Trees & Landscaping"
+        description="Veteran owned and operated — meet the team bringing military discipline, honor, and precision to tree care and landscaping across Central & North Texas."
+        path="/about"
+      />
       <PageHero
         eyebrow="Our Story"
         title="About Us"

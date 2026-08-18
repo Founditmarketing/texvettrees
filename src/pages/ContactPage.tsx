@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, ShieldCheck } from 'lucide-react';
 import { HUBSPOT_FORM_URL } from '../components/ContactForm';
 import { SocialLinks } from '../components/SocialLinks';
 import { SectionWatermark } from '../components/SectionWatermark';
+import { PageSEO } from '../components/PageSEO';
 import { TRUST_BADGES } from '../data/badges';
 
 const CONTACTS = [
@@ -16,6 +17,11 @@ const CONTACTS = [
 export function ContactPage() {
   return (
     <section className="relative bg-[#0a0a0a] pt-40 md:pt-48 pb-24 border-b border-white/5">
+      <PageSEO
+        title="Contact Us | Tex Vet Trees & Landscaping"
+        description="Get a free, no-obligation estimate from our veteran-led tree service and landscaping team. Call (254) 447-5090 or request a quote online."
+        path="/contact"
+      />
       <SectionWatermark text="Contact" align="top" />
 
       <div className="container mx-auto px-6 relative z-10">

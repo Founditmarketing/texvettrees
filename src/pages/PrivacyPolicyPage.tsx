@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import { LegalPage } from '../components/LegalPage';
+import { PageSEO } from '../components/PageSEO';
 
 export function PrivacyPolicyPage() {
   return (
-    <LegalPage title="Privacy Policy" watermark="Privacy" updated="June 2026">
+    <>
+      <PageSEO
+        title="Privacy Policy | Tex Vet Trees & Landscaping"
+        description="Read the Tex Vet Trees & Landscaping privacy policy to learn how we collect, use, and protect your information."
+        path="/privacy-policy"
+      />
+      <LegalPage title="Privacy Policy" watermark="Privacy" updated="June 2026">
       <p>
         This Privacy Policy explains how Tex Vet Trees &amp; Landscaping (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or
         &ldquo;our&rdquo;) collects, uses, and protects information when you visit our website or request our services.
@@ -91,6 +98,7 @@ export function PrivacyPolicyPage() {
         <a href="mailto:texvettrees@gmail.com">texvettrees@gmail.com</a>, or use our{' '}
         <Link to="/contact">contact page</Link>.
       </p>
-    </LegalPage>
+      </LegalPage>
+    </>
   );
 }

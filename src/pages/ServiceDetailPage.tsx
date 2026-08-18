@@ -5,6 +5,8 @@ import { getService, SERVICES } from '../data/services';
 import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
 import { BeforeAfterSlider } from '../components/BeforeAfterSlider';
+import { PageSEO, SITE_DOMAIN } from '../components/PageSEO';
+import { BUSINESS_NAME } from '../data/business';
 
 export function ServiceDetailPage() {
   const { slug } = useParams();
@@ -13,12 +15,36 @@ export function ServiceDetailPage() {
 
   if (!service) return <Navigate to="/" replace />;
 
-  const { title, tagline, intro, features, bulletIcon, before, after, watermark, Icon } = service;
+  const { title, tagline, intro, description, features, bulletIcon, before, after, watermark, Icon } = service;
   const Bullet = bulletIcon === 'leaf' ? Leaf : Check;
   const others = SERVICES.filter((s) => s.slug !== service.slug);
 
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: title,
+    description,
+    url: `${SITE_DOMAIN}/services/${service.slug}`,
+    areaServed: {
+      '@type': 'State',
+      name: 'Texas',
+    },
+    provider: {
+      '@type': 'LocalBusiness',
+      name: BUSINESS_NAME,
+      url: SITE_DOMAIN,
+    },
+  };
+
   return (
     <>
+      <PageSEO
+        title={`${title} | Tex Vet Trees & Landscaping`}
+        description={description}
+        path={`/services/${service.slug}`}
+        image={`${SITE_DOMAIN}${after}`}
+        jsonLd={serviceJsonLd}
+      />
       <PageHero eyebrow="Our Services" title={title} subtitle={tagline} watermark={watermark} image={after} />
 
       {/* Overview — copy + interactive before/after */}

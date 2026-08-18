@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
 import { LegalPage } from '../components/LegalPage';
+import { PageSEO } from '../components/PageSEO';
 
 export function TermsPage() {
   return (
-    <LegalPage title="Terms & Conditions" watermark="Terms" updated="June 2026">
+    <>
+      <PageSEO
+        title="Terms & Conditions | Tex Vet Trees & Landscaping"
+        description="Read the terms and conditions governing your use of the Tex Vet Trees & Landscaping website and services."
+        path="/terms"
+      />
+      <LegalPage title="Terms & Conditions" watermark="Terms" updated="June 2026">
       <p>
         These Terms &amp; Conditions govern your use of the Tex Vet Trees &amp; Landscaping website and the services we
         provide. By accessing our site or engaging our services, you agree to these terms.
@@ -85,6 +92,7 @@ export function TermsPage() {
         <a href="mailto:texvettrees@gmail.com">texvettrees@gmail.com</a>, or use our{' '}
         <Link to="/contact">contact page</Link>.
       </p>
-    </LegalPage>
+      </LegalPage>
+    </>
   );
 }

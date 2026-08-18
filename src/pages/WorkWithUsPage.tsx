@@ -3,6 +3,7 @@ import { ShieldCheck, Wrench, TrendingUp, Users, Phone, Mail } from 'lucide-reac
 import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
 import { WorkWithUsForm } from '../components/WorkWithUsForm';
+import { PageSEO } from '../components/PageSEO';
 
 const PERKS = [
   {
@@ -30,6 +31,11 @@ const PERKS = [
 export function WorkWithUsPage() {
   return (
     <>
+      <PageSEO
+        title="Work With Us | Tex Vet Trees & Landscaping"
+        description="Join a veteran-friendly tree service and landscaping crew across Central & North Texas — real craftsmanship, room to grow, and a culture built on discipline and respect."
+        path="/work-with-us"
+      />
       <PageHero
         eyebrow="Join The Team"
         title="Work With Us"
