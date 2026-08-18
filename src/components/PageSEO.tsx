@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 
-export const SITE_DOMAIN = 'https://texvettrees.com';
+// www is the live canonical host: texvettrees.com issues a 308 to www.texvettrees.com at the
+// Vercel domain level (outside this repo), so every URL we emit needs to match that or a page
+// generates a self-referencing redirect instead of a canonical match.
+export const SITE_DOMAIN = 'https://www.texvettrees.com';
 const DEFAULT_IMAGE = `${SITE_DOMAIN}/og-image.png`;
 
 type JsonLdValue = Record<string, unknown>;

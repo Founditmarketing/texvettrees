@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://texvettrees.com/sitemap.xml
+Sitemap: https://www.texvettrees.com/sitemap.xml
