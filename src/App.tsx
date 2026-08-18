@@ -5,6 +5,7 @@
 
 import { Routes, Route } from 'react-router-dom';
 import { MotionConfig } from 'motion/react';
+import { Analytics } from '@vercel/analytics/react';
 import { IntroProvider } from './components/Intro';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -40,6 +41,7 @@ export default function App() {
           </Route>
         </Routes>
       </IntroProvider>
+      <Analytics />
     </MotionConfig>
   );
 }
