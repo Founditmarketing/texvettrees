@@ -32,4 +32,11 @@ export const LOCAL_BUSINESS_JSON_LD = {
     name: 'Texas',
   },
   sameAs: BUSINESS_SOCIAL_LINKS,
+  // Sourced from the live Google Business Profile (Google Search knowledge panel), checked 2026-08-17.
+  // Reflects Google's own review count only — refresh periodically as reviews accumulate.
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.8',
+    reviewCount: '24',
+  },
 };
